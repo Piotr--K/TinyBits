@@ -2,16 +2,19 @@ val seq = List(1, 2, -3, 12, 2, -1)
 val masterMap = Map()
 var maxSumMap = Map()
 val seqIndex = seq.zipWithIndex
-for (
-	el<-seqIndex;
-  levelMapsList<- masterMap(el._2);
+for {
+	el<-seqIndex
+  levelMapsList<- masterMap(el._2)
 	levelMap <- levelMapsList
+}
+yield{
   levelMap += (el._2 -> el._1)
   masterMap += ((el._2 + 1) -> levelMap)
-  if(maxSumMap.foldLeft(0)(_+_._2) < levelMap.foldLeft(0)(_+_._2))){
+  if(maxSumMap.foldLeft(0)(_+_._2) < levelMap.foldLeft(0)(_+_._2)){
     maxSumMap = levelMap
   }
 println(maxSumMap)
+}
 //Finding maximum sublist
 //
 //Create map of list of maps which will have keys set to indicate level of the maps
